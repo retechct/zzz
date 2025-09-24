@@ -1,0 +1,17 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  postgres:
+    image: postgres:15-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: chjt
+      POSTGRES_PASSWORD: chjtpassword
+      POSTGRES_DB: vendedores_db      # Elige un nombre para la base de datos
+    ports:
+      - "5433:5432" # Mapea el puerto de tu PC al del contenedor
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -1,0 +1,37 @@
+
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model Distrito {
+  id_distrito Int        @id @default(autoincrement())
+  nombre      String     @unique @db.VarChar(50)
+  vendedores  Vendedor[]
+}
+
+
+model Especialidad {
+  id_especialidad Int        @id @default(autoincrement())
+  nombre          String     @unique
+  vendedores      Vendedor[]
+}
+
+model Vendedor {
+  id_ven      Int       @id @default(autoincrement())
+  nom_ven     String    @db.VarChar(25)
+  ape_ven     String    @db.VarChar(25)
+  cel_ven     String    @db.Char(9)
+  id_distrito Int?      
+  distrito    Distrito? @relation(fields: [id_distrito], references: [id_distrito])
+
+ 
+  id_especialidad Int?
+  especialidad    Especialidad? @relation(fields: [id_especialidad], references: [id_especialidad])
+}
